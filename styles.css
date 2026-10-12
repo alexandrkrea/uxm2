@@ -1,0 +1,700 @@
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+:root {
+  --color-bg: #a6acb5;
+  --color-gray: #c5c9cf;
+  --color-accent: #e1f030;
+  --color-dark: #161b24;
+  --color-light: #f8f7fc;
+
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-text: "Mulish", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  font-family: var(--font-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: none;
+}
+
+p,
+h1,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Hero
+   Канвас макета Figma 1920×1080. Все размеры заданы как calc(N * var(--u)),
+   где N — px из макета, а --u — масштаб от ширины блока. Поэтому вёрстка
+   пропорционально растёт вместе с экраном.
+   ========================================================================== */
+
+.hero {
+  --u: calc(100cqw / 1920);
+
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920 / 1080;
+  overflow: hidden;
+  font-family: var(--font-display);
+  color: var(--color-light);
+  background:
+    linear-gradient(180deg, var(--color-bg) 0%, rgba(194, 198, 204, 0) 28.833%),
+    linear-gradient(90deg, var(--color-bg) 0%, var(--color-bg) 100%);
+}
+
+/* Декоративные линии на фоне */
+.hero__lines {
+  position: absolute;
+  left: calc(-373 * var(--u));
+  top: calc(-1219 * var(--u));
+  width: calc(3099 * var(--u));
+  height: calc(3202 * var(--u));
+  pointer-events: none;
+}
+
+/* Крупный фоновый текст UI/UX/AI */
+.hero__bg-title {
+  position: absolute;
+  left: calc(-84 * var(--u));
+  top: calc(203 * var(--u));
+  font-size: 0;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__bg-title span {
+  font-size: calc(460 * var(--u));
+  font-weight: 200;
+  line-height: 1;
+}
+
+.hero__bg-title .accent {
+  color: var(--color-accent);
+}
+
+/* Фото ментора: маска и затемнение уже запечены в assets/hero-photo.png.
+   CSS mask-image не используем: при открытии через file:// браузер блокирует его по CORS. */
+.hero__photo {
+  position: absolute;
+  left: calc(724 * var(--u));
+  top: calc(22 * var(--u));
+  width: calc(903 * var(--u));
+  height: calc(1230 * var(--u));
+}
+
+.hero__photo img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Карточка ментора */
+.mentor {
+  position: absolute;
+  left: calc(1348 * var(--u));
+  top: calc(426 * var(--u));
+  width: calc(350 * var(--u));
+  height: calc(181 * var(--u));
+}
+
+/* Фон карточки: верхний левый угол прямой, чтобы примыкать к тегу */
+.mentor__bg {
+  position: absolute;
+  left: 0;
+  top: calc(33 * var(--u));
+  width: 100%;
+  height: calc(148 * var(--u));
+  border-radius: 0 calc(8 * var(--u)) calc(8 * var(--u)) calc(8 * var(--u));
+  background: var(--color-dark);
+}
+
+/* Тег: скруглены только верхние углы, нижние прямые — тег и карточка образуют один контур */
+.mentor__tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: calc(10 * var(--u)) calc(32 * var(--u));
+  border-radius: calc(8 * var(--u)) calc(8 * var(--u)) 0 0;
+  background: var(--color-dark);
+  font-size: calc(12 * var(--u));
+  line-height: calc(14 * var(--u));
+  color: var(--color-gray);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mentor__name {
+  position: absolute;
+  left: calc(32 * var(--u));
+  top: calc(57 * var(--u));
+  font-size: calc(24 * var(--u));
+  line-height: 1.6;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mentor__role {
+  position: absolute;
+  left: calc(32 * var(--u));
+  top: calc(99 * var(--u));
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: calc(18 * var(--u));
+  line-height: 1.6;
+  letter-spacing: calc(0.36 * var(--u));
+  color: #fff;
+  white-space: nowrap;
+}
+
+.mentor__role span {
+  display: block;
+  color: var(--color-gray);
+}
+
+/* Шапка: логотип и кнопки */
+.topbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+}
+
+.logo {
+  position: absolute;
+  left: calc(202 * var(--u));
+  top: calc(64 * var(--u));
+  width: calc(200 * var(--u));
+  height: calc(48 * var(--u));
+}
+
+.logo__bar {
+  position: absolute;
+  top: calc(6 * var(--u));
+  width: calc(7 * var(--u));
+  height: calc(42 * var(--u));
+  border-radius: calc(2 * var(--u));
+  background: var(--color-light);
+}
+
+.logo__bar--1 {
+  left: 0;
+  background: var(--color-accent);
+  border-radius: calc(2 * var(--u)) 0 0 calc(2 * var(--u));
+}
+
+.logo__bar--2 {
+  left: calc(38 * var(--u));
+  background: var(--color-accent);
+  border-radius: 0 calc(2 * var(--u)) calc(2 * var(--u)) 0;
+}
+
+.logo__bar--3 {
+  left: calc(53 * var(--u));
+}
+
+.logo__bar--4 {
+  left: calc(68 * var(--u));
+}
+
+.logo__mark {
+  position: absolute;
+  left: calc(1.55 * var(--u));
+  top: calc(6 * var(--u));
+  width: calc(41.9 * var(--u));
+  height: calc(41.9 * var(--u));
+}
+
+.logo__text {
+  position: absolute;
+  left: calc(98 * var(--u));
+  top: calc(2 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(20 * var(--u));
+  line-height: normal;
+  letter-spacing: calc(1 * var(--u));
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.btn {
+  position: absolute;
+  top: calc(64 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(10 * var(--u));
+  border: calc(2 * var(--u)) solid transparent;
+  border-radius: calc(8 * var(--u));
+  font-family: var(--font-display);
+  font-size: calc(16 * var(--u));
+  line-height: normal;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:focus-visible,
+.hero__about:focus-visible,
+.logo:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.btn--primary {
+  left: calc(1422 * var(--u));
+  padding: calc(15 * var(--u)) calc(24 * var(--u)) calc(15 * var(--u)) calc(32 * var(--u));
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-dark);
+}
+
+.btn--primary .btn__icon {
+  transform: scaleX(-1);
+}
+
+.btn--icon {
+  left: calc(1664 * var(--u));
+  padding: calc(15 * var(--u));
+  border-color: var(--color-gray);
+  color: var(--color-gray);
+}
+
+.btn__icon {
+  flex: none;
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+}
+
+/* Текстовый блок */
+.hero__kicker {
+  position: absolute;
+  left: calc(207 * var(--u));
+  top: calc(588 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc(24 * var(--u));
+  line-height: 1.6;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero__title {
+  position: absolute;
+  left: calc(202 * var(--u));
+  top: calc(626 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: calc(72 * var(--u));
+  line-height: 1.2;
+  color: var(--color-light);
+  text-transform: uppercase;
+  text-shadow: 0 calc(4 * var(--u)) calc(64 * var(--u)) rgba(50, 61, 78, 0.17);
+  white-space: nowrap;
+}
+
+.hero__title span {
+  display: block;
+}
+
+/* Теги-кнопки под заголовком */
+.hero__tags {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+}
+
+.hero__tag {
+  position: absolute;
+  top: calc(830 * var(--u));
+  padding: calc(15 * var(--u)) calc(24 * var(--u));
+  border-radius: calc(64 * var(--u));
+  background: var(--color-dark);
+  font-family: var(--font-display);
+  font-size: calc(16 * var(--u));
+  line-height: normal;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero__tag--1 {
+  left: calc(202 * var(--u));
+}
+
+.hero__tag--2 {
+  left: calc(597 * var(--u));
+}
+
+.hero__tag--3 {
+  left: calc(840 * var(--u));
+}
+
+.hero__note {
+  position: absolute;
+  left: calc(205 * var(--u));
+  top: calc(906 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--u));
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: calc(10 * var(--u));
+  line-height: 1.6;
+  letter-spacing: calc(0.2 * var(--u));
+  color: #eceef1;
+  white-space: nowrap;
+}
+
+.hero__note img {
+  flex: none;
+  width: calc(6.487 * var(--u));
+  height: calc(7 * var(--u));
+}
+
+/* Декоративная звёздочка */
+.hero__star {
+  position: absolute;
+  left: calc(1149 * var(--u));
+  top: calc(625 * var(--u));
+  width: calc(35 * var(--u));
+  height: calc(33 * var(--u));
+}
+
+/* Ссылка «О веб-дизайне и менторе» с кнопкой-плеером */
+.hero__about {
+  position: absolute;
+  left: calc(1460 * var(--u));
+  top: calc(819 * var(--u));
+  display: flex;
+  align-items: center;
+  gap: calc(23 * var(--u));
+}
+
+.hero__play {
+  flex: none;
+  width: calc(72 * var(--u));
+  height: calc(72 * var(--u));
+}
+
+.hero__play img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero__about-text {
+  font-family: var(--font-display);
+  font-size: calc(16 * var(--u));
+  line-height: normal;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Белая подложка следующего блока */
+.hero__sheet {
+  position: absolute;
+  left: 0;
+  top: calc(980 * var(--u));
+  width: 100%;
+  height: calc(3430 * var(--u));
+  border-radius: calc(64 * var(--u));
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Мобильная версия: макет 360×800 из Figma.
+   Тот же приём, что и у hero: размеры в calc(N * var(--u)),
+   где --u = ширина блока / 360. Показывается до 767px.
+   ========================================================================== */
+
+.phone {
+  --u: calc(100cqw / 360);
+
+  display: none;
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 360 / 800;
+  overflow: hidden;
+  background: var(--color-bg);
+  font-family: var(--font-display);
+  color: var(--color-light);
+}
+
+/* Фоновый текст UI/UX/AI */
+.phone__bg-title {
+  position: absolute;
+  left: calc(-116 * var(--u));
+  top: calc(123 * var(--u));
+  font-size: 0;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.phone__bg-title span {
+  font-size: calc(128 * var(--u));
+  font-weight: 200;
+  line-height: 1;
+}
+
+.phone__bg-title .accent {
+  color: var(--color-accent);
+}
+
+/* Фото уже с маской и градиентами внутри assets/hero-photo-phone.png */
+.phone__photo {
+  position: absolute;
+  left: calc(-42 * var(--u));
+  top: calc(71 * var(--u));
+  width: calc(515 * var(--u));
+  height: calc(702 * var(--u));
+}
+
+.phone__photo img {
+  width: 100%;
+  height: 100%;
+}
+
+.phone__logo {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(22 * var(--u));
+  width: calc(42 * var(--u));
+  height: calc(24 * var(--u));
+}
+
+.phone__logo img {
+  width: 100%;
+  height: 100%;
+}
+
+.phone__menu {
+  position: absolute;
+  left: calc(300 * var(--u));
+  top: calc(16 * var(--u));
+  width: calc(36 * var(--u));
+  height: calc(36 * var(--u));
+  padding: 0;
+}
+
+.phone__menu img {
+  width: 100%;
+  height: 100%;
+}
+
+.phone__title {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(440 * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: calc(32 * var(--u));
+  line-height: 1.2;
+  color: var(--color-light);
+  text-transform: uppercase;
+  text-shadow: 0 calc(4 * var(--u)) calc(64 * var(--u)) #323d4e;
+  white-space: nowrap;
+}
+
+.phone__title span {
+  display: block;
+}
+
+.phone__star {
+  position: absolute;
+  left: calc(312 * var(--u));
+  top: calc(455 * var(--u));
+  width: calc(24 * var(--u));
+  height: calc(22 * var(--u));
+}
+
+.phone__label {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(264 * var(--u));
+  font-family: var(--font-display);
+  font-size: calc(10 * var(--u));
+  line-height: normal;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.phone__name {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(278 * var(--u));
+  font-family: var(--font-display);
+  font-size: calc(13 * var(--u));
+  line-height: 1.6;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.phone__role {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(301 * var(--u));
+  font-family: var(--font-text);
+  font-weight: 600;
+  font-size: calc(10 * var(--u));
+  line-height: 1.4;
+  letter-spacing: calc(0.2 * var(--u));
+  color: #fff;
+  white-space: nowrap;
+}
+
+.phone__role span {
+  display: block;
+}
+
+/* Ряд тегов прокручивается по горизонтали, как в макете */
+.phone__tags {
+  position: absolute;
+  left: 0;
+  top: calc(578 * var(--u));
+  width: 100%;
+  height: calc(32 * var(--u));
+  display: flex;
+  gap: calc(4 * var(--u));
+  padding-left: calc(24 * var(--u));
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.phone__tags::-webkit-scrollbar {
+  display: none;
+}
+
+.phone__tags li {
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: calc(10 * var(--u)) calc(16 * var(--u));
+  border-radius: calc(64 * var(--u));
+  background: var(--color-dark);
+  font-family: var(--font-display);
+  font-size: calc(10 * var(--u));
+  line-height: normal;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Белая подложка с закруглёнными верхними углами */
+.phone__sheet {
+  position: absolute;
+  left: 0;
+  top: calc(671 * var(--u));
+  width: 100%;
+  height: calc(787 * var(--u));
+  border-radius: calc(24 * var(--u));
+  background: #fff;
+}
+
+.phone__cta {
+  position: absolute;
+  left: calc(24 * var(--u));
+  top: calc(634 * var(--u));
+  width: calc(312 * var(--u));
+  height: calc(64 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(10 * var(--u));
+  padding: calc(15 * var(--u)) calc(24 * var(--u)) calc(15 * var(--u)) calc(32 * var(--u));
+  border: calc(2 * var(--u)) solid var(--color-accent);
+  border-radius: calc(8 * var(--u));
+  background: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: calc(16 * var(--u));
+  line-height: normal;
+  color: var(--color-dark);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.phone__cta img {
+  flex: none;
+  width: calc(24 * var(--u));
+  height: calc(24 * var(--u));
+  transform: scaleX(-1);
+}
+
+.phone__logo:focus-visible,
+.phone__menu:focus-visible,
+.phone__cta:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* Переключение версий: до 767px показываем мобильный макет, выше — десктопный */
+@media (max-width: 767px) {
+  .hero {
+    display: none;
+  }
+
+  .phone {
+    display: block;
+  }
+}
